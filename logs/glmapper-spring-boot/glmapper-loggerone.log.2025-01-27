@@ -1,0 +1,8 @@
+2025-01-27 14:48:20.111 [http-nio-8080-exec-1] INFO  com.example.HOVCarpool.service.UserService - UserService ok
+2025-01-27 14:48:42.448 [main] INFO  com.example.HOVCarpool.HovCarpoolApplication - Starting HovCarpoolApplication using Java 17.0.5 with PID 22796 (C:\Users\Tom Chen\Desktop\Tom 個人資料\dev\HOVCarpool\HOVCarpool\target\classes started by Tom Chen in C:\Users\Tom Chen\Desktop\Tom 個人資料\dev\HOVCarpool\HOVCarpool)
+2025-01-27 14:48:42.451 [main] INFO  com.example.HOVCarpool.HovCarpoolApplication - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 14:48:48.104 [main] INFO  com.example.HOVCarpool.HovCarpoolApplication - Started HovCarpoolApplication in 6.163 seconds (process running for 6.999)
+2025-01-27 15:03:44.061 [main] INFO  com.example.HOVCarpool.HovCarpoolApplication - Starting HovCarpoolApplication using Java 17.0.5 with PID 13008 (C:\Users\Tom Chen\Desktop\Tom 個人資料\dev\HOVCarpool\HOVCarpool\target\classes started by Tom Chen in C:\Users\Tom Chen\Desktop\Tom 個人資料\dev\HOVCarpool\HOVCarpool)
+2025-01-27 15:03:44.063 [main] DEBUG com.example.HOVCarpool.HovCarpoolApplication - Running with Spring Boot v3.3.4, Spring v6.1.13
+2025-01-27 15:03:44.064 [main] INFO  com.example.HOVCarpool.HovCarpoolApplication - No active profile set, falling back to 1 default profile: "default"
+2025-01-27 15:03:51.340 [main] INFO  com.example.HOVCarpool.HovCarpoolApplication - Started HovCarpoolApplication in 7.719 seconds (process running for 8.514)

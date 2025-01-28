@@ -1,0 +1,61 @@
+<configuration>
+    <!-- 属性文件:在properties文件中找到对应的配置项 -->
+    <springProperty scope="context" name="logging.path"  source="logging.path"/>
+    <springProperty scope="context" name="logging.level" source="logging.level.com.glmapper.spring.boot"/>
+
+
+    <contectName>aaaaa66666666666</contectName>
+    <property  name="CONCEL_log_format"  value="%yellow(%d{YYYY/MM/DD HH:mm:ss.SSS}) %highlight([%-5level]) %green(%logger{80}) - %msg%n" />
+    <property name="logging.path" value="./logs"/>
+    <property name="encoding" value="utf-8"/>
+
+    <!-- 默认的控制台日志输出，一般生产环境都是后台启动，这个没太大作用 -->
+    <appender name="STDOUT"   class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+
+<!--            設定log印製的格式-->
+<!--            %d{HH:mm:ss.SSS} : 調整時分秒-->
+<!--            [%-5level] : 印log等級 5表示log等級最多印出5個字-->
+<!--            %c : 印出log 來自哪個類別-->
+<!--            %msg : 表示log.info(....) 所要印出來的訊息-->
+<!--            %n : 換行-->
+<!--            <Pattern>%d{HH:mm:ss.SSS} [%-5level] %c %logger{80} - %msg%n</Pattern>-->
+            <Pattern>${CONCEL_log_format}</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="file_log"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <append>true</append>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${logging.level}</level>
+        </filter>
+        <file>
+            ${logging.path}/user_log/userlog.log
+        </file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logging.path}/glmapper-spring-boot/glmapper-loggerone.log.%d{yyyy-MM-dd}</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+<!--    name="com.example.HOVCarpool.service" <&#45;&#45; 設定log 列印範圍，以package為單位-->
+    <logger name="com.example.HOVCarpool" level="${logging.level}"
+            additivity="false">
+
+<!--        把該範圍內的log往兩個地方紀錄。-->
+        <appender-ref ref="file_log" />
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+  <root level="info">   <!--  設定印製的級別-->
+<!--        <appender-ref ref="GLMAPPER-LOGGERONE"/>-->
+
+<!--        <appender-ref ref="GLMAPPER-LOGGERONE"/>-->
+<!--        <appender-ref ref="STDOUT"/>-->
+    </root>
+</configuration>

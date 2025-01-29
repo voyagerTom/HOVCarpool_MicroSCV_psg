@@ -37,13 +37,15 @@ public class UserController {
     })
     public ResponseEntity<String> register( @RequestBody User user ){
         User newUser=null;
-
+        log.info("創建使用帳號 開始 欲申請的帳號: {}  ",user.getName());
         newUser = userRepository.findByEmail(user.getEmail());
         if (newUser!=null){
+            log.info("角色創建失敗，帳號已存在。ACT:{}",user.getEmail());
             return ResponseEntity.status(HttpStatus.CONFLICT).body("角色創建失敗，帳號已存在。ACT: "+user.getEmail());
         }
 
         newUser=userService.register(user);
+        log.info("角色創建成功 ACT:{}",user.getEmail());
         return  ResponseEntity.status(HttpStatus.CREATED).body("角色創建成功" + newUser.toString());
     }
 

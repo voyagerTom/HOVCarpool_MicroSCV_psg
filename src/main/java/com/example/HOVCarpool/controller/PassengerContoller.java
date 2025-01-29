@@ -53,7 +53,7 @@ public class PassengerContoller {
             apiResponse.setObject(carpoolMaps);
             apiResponse.setHttpCode(HttpStatus.OK);
             apiResponse.setMsg("預約成功");
-            log.info("預約共乘代碼: {} ",carpoolMaps.get(0).getCmid());
+            log.info("預約共乘訂單代碼: {} ",carpoolMaps.get(0).getCmid());
             log.info("乘客:{} - 預約共乘車次:{} 結束-success.",orderCarpoolDTO.getUserId(),orderCarpoolDTO.getCarpoolId());
             return ResponseEntity.ok().body(apiResponse);
         }
@@ -62,7 +62,6 @@ public class PassengerContoller {
         apiResponse.setMsg("預約失敗，請確認是否已滿位或重複預約");
         log.info("乘客:{} - 預約共乘車次:{} 結束. 預約結果: {}",orderCarpoolDTO.getUserId(),orderCarpoolDTO.getCarpoolId(),"fail，請確認是否已滿位或重複預約");
 
-        //資源衝突
         return ResponseEntity.ok().body(apiResponse);
 
     }
@@ -87,6 +86,7 @@ public class PassengerContoller {
     @Operation(summary = "取消")
     public ResponseEntity<APIResponse> cancelOrderCarpoolById(@RequestBody OrderCarpoolDTO orderCarpoolDTO) {
         log.info("乘客:{} - 取消共乘車次:{} 開始",orderCarpoolDTO.getUserId(),orderCarpoolDTO.getCarpoolId());
+        log.info("欲取消的共乘訂單: {}",orderCarpoolDTO.getCmid());
         APIResponse apiResponse = new APIResponse();
         boolean isCancelOk = ps.cancelOrderCarpoolById(orderCarpoolDTO);
 
@@ -113,11 +113,14 @@ public class PassengerContoller {
 
     @GetMapping("/getcarpoolbysite")
     public ResponseEntity<APIResponse> getCarpoolBySite(@RequestParam String site) {
+        log.info("搜尋共乘車次 site:{} 開始",site);
         APIResponse apiResponse = new APIResponse();
         List<Carpool> carpools = carpoolRepo.findBySite(site);
         apiResponse.setObject(carpools);
         apiResponse.setHttpCode(HttpStatus.OK);
         apiResponse.setMsg("查詢成功");
+
+        log.info("搜尋共乘車次 結束");
         return ResponseEntity.ok().body(apiResponse);
 
     }
@@ -125,15 +128,18 @@ public class PassengerContoller {
 
     @PutMapping("/applyfordriver")
     public ResponseEntity<APIResponse> applyForDriver(@RequestBody OrderCarpoolDTO orderCarpoolDTO) {
+        log.info("乘客:{} - 申請成為司機 開始",orderCarpoolDTO.getUserId());
         int userId = orderCarpoolDTO.getUserId();
         APIResponse apiResponse = new APIResponse();
         boolean isApplyOK = ps.applyForDriver(userId, "收到申請文件");
         if (isApplyOK) {
             apiResponse.setMsg("已收到【轉職司機】申請，待管理員審核");
             apiResponse.setHttpCode(HttpStatus.OK);
+            log.info("乘客:{} - 申請成為司機 結束-result:ok-已收到【轉職司機】申請，待管理員審核",orderCarpoolDTO.getUserId());
             return ResponseEntity.ok().body(apiResponse);
         }
         apiResponse.setMsg("申請失敗:【案件審核中或審核未通過】");
+        log.info("乘客:{} - 申請成為司機 結束-result:fail-案件審核中或審核未通過",orderCarpoolDTO.getUserId());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(apiResponse);
     }
 

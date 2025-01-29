@@ -78,6 +78,7 @@ public class PassengerServiceImp implements PassengerService {
         if (isBookOk1 == 1 && isBookOk2 == 1) {
             System.out.println("carpoolId:" + carpoolId + " _加入一位共乘");
             System.out.println("carpoolId:" + carpoolId + " _map預約成功");
+
             return true;
         }
         return false;
@@ -94,14 +95,16 @@ public class PassengerServiceImp implements PassengerService {
         //驗證P是否重複取消
         String isCancel = carpoolMap.getIsCancel();
         if (carpoolMap == null ) {
-            System.out.println("無此訂單或已取消 訂單號:" + cmId);
+//            System.out.println("無此訂單或已取消 訂單號:" + cmId);
+            log.info("無此訂單或已取消 訂單號:{}",cmId);
             return false;
         }
 
         int userId = carpoolMap.getUserId();
         int carpoolId = carpoolMap.getCarpoolId();
         if (isCancel.equalsIgnoreCase("Y")) {
-            System.out.println("userId: " + userId + " 車次【" + carpoolId + "】無預定或已取消 ");
+//            System.out.println("userId: " + userId + " 車次【" + carpoolId + "】無預定或已取消 ");
+            log.info("userId:{} 車次:{} 無預定或已取消 ",userId,carpoolId);
             return false;
         }
 
@@ -118,8 +121,11 @@ public class PassengerServiceImp implements PassengerService {
 
 
         if (carpoolMapRTN.getCmid()!=0 && carpoolRTN.getId()!=0 ) {
-            System.out.println("carpoolId:" + carpoolRTN.getId() + " _移除一位共乘");
-            System.out.println("carpoolMapId:" +carpoolMapRTN.getCmid() + " carpool_map取消搭乘成功");
+//            System.out.println("carpoolId:" + carpoolRTN.getId() + " _移除一位共乘");
+//            System.out.println("carpoolMapId:" +carpoolMapRTN.getCmid() + " carpool_map取消搭乘成功");
+
+            log.info("carpoolId:{}  移除一位共乘",carpoolRTN.getId());
+            log.info("carpoolMapId:{}  移除一位共乘",carpoolMapRTN.getCmid());
             return true;
         }
         return false;
@@ -141,6 +147,7 @@ public class PassengerServiceImp implements PassengerService {
         List<Carpool> carpools = new ArrayList<>();
 
         for (CarpoolMap carpoolMap : carpoolMaps) {
+            log.debug("carpoolMap:{}",carpoolMap.getCmid());
             int carpoolId = carpoolMap.getCarpoolId();
             Carpool carpool = carpoolRepository.findById(carpoolMap.getCarpoolId()).orElse(null);
             carpools.add(carpool);
@@ -159,16 +166,19 @@ public class PassengerServiceImp implements PassengerService {
         //如果userID 存在urm中，則回傳false
         UserRoleMap userRoleMap = userRoleMapRepository.findByUserIdAndRoleId(userId, driverId);
         if (userRoleMap != null) {
-            System.out.println("userId: " + userId + " 您已是司機，無須再申請");
+//            System.out.println("userId: " + userId + " 您已是司機，無須再申請");
+            log.info("userId:{}  您已是司機，無須再申請",userId);
             return false;
         }
 
         //todo case:審核中
         //findByUserIdAndRoldId
         List<ApproveTodoList> approveTodoLists =approveTodoListRepository.findByUserIdAndRoleId(userId,driverId);
+        log.info("申請人:{} 申請單加入審核名單中",userId);
         for (ApproveTodoList approveTodoList:approveTodoLists){
             if (approveTodoList.getIsApprove().equalsIgnoreCase("TBD")){
-                System.out.println("案件審核中，請稍後");
+//                System.out.println("案件審核中，請稍後");
+                log.debug("案件審核中，請稍後");
                 return false;
             }
         }
@@ -177,7 +187,8 @@ public class PassengerServiceImp implements PassengerService {
         String now = TimeTool.getTimeNow();
         int isApplyOK = approveTodoListRepository.addAproveInfo(userId, driverId, "申請成為司機", now);
         if (isApplyOK == 1) {
-            System.out.println("已完成申請【轉職司機】，待審核");
+//            System.out.println("已完成申請【轉職司機】，待審核");
+            log.info("已完成申請【轉職司機】，待審核");
             return true;
         }
         return false;

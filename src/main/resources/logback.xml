@@ -34,7 +34,7 @@
             ${logging.path}/user_log/userlog.log
         </file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>${logging.path}/glmapper-spring-boot/glmapper-loggerone.log.%d{yyyy-MM-dd}</FileNamePattern>
+            <FileNamePattern>${logging.path}/user_log/userlog.log.%d{yyyy-MM-dd}</FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">

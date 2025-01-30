@@ -42,7 +42,7 @@ public class PassengerServiceImp implements PassengerService {
     public boolean ordercarpool(OrderCarpoolDTO orderCarpoolDTO) {
         int carpoolId = orderCarpoolDTO.getCarpoolId();
 
-        //todo 審核機制 【該carpool是否已滿 / 該P是否重複預約 】
+        //todo 審核機制 【該carpool是否已滿 / 該P是否重複預約 /該車次已取消】
         //確認carpool是否被重複預約
         //預防預約後取消又預定
         int userId = orderCarpoolDTO.getUserId();
@@ -61,10 +61,16 @@ public class PassengerServiceImp implements PassengerService {
 
         //確認是否已滿位
         Carpool carpool = carpoolRepository.findById(carpoolId).orElse(null);
-        ;
+
+        if (carpool.getIsCancel().equalsIgnoreCase("Y")){
+            log.info("車次:{} 已取消",carpoolId);
+            return false;
+        }
+
         int leftSeat = carpool.getPickAmt() - carpool.getOrderAmt();
         if (leftSeat <= 0) {
-            System.out.println("座位已滿");
+//            System.out.println("座位已滿");
+            log.info("座位已滿");
             return false;
         }
 
@@ -76,8 +82,10 @@ public class PassengerServiceImp implements PassengerService {
         int isBookOk2 = carpoolMapRepository.addCarpoolMap(carpoolId, userId, String.valueOf(now));
 
         if (isBookOk1 == 1 && isBookOk2 == 1) {
-            System.out.println("carpoolId:" + carpoolId + " _加入一位共乘");
-            System.out.println("carpoolId:" + carpoolId + " _map預約成功");
+//            System.out.println("carpoolId:" + carpoolId + " _加入一位共乘");
+//            System.out.println("carpoolId:" + carpoolId + " _map預約成功");
+            log.info("carpoolId:{} 加入一位共乘",carpoolId);
+            log.info("carpoolId:{} _map預約成功",carpoolId);
 
             return true;
         }

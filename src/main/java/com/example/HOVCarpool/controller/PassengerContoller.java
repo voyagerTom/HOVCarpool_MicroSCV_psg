@@ -59,8 +59,8 @@ public class PassengerContoller {
         }
 
         apiResponse.setHttpCode(HttpStatus.OK);
-        apiResponse.setMsg("預約失敗，請確認是否已滿位或重複預約");
-        log.info("乘客:{} - 預約共乘車次:{} 結束. 預約結果: {}",orderCarpoolDTO.getUserId(),orderCarpoolDTO.getCarpoolId(),"fail，請確認是否已滿位或重複預約");
+        apiResponse.setMsg("預約失敗，請確認是否已滿位、重複預約或車次已取消");
+        log.info("乘客:{} - 預約共乘車次:{} 結束-fail. 預約結果: {}",orderCarpoolDTO.getUserId(),orderCarpoolDTO.getCarpoolId(),"fail，請確認是否已滿位或重複預約");
 
         return ResponseEntity.ok().body(apiResponse);
 

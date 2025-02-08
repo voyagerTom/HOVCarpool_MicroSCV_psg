@@ -1,10 +1,10 @@
 <configuration>
     <!-- 属性文件:在properties文件中找到对应的配置项 -->
-    <springProperty scope="context" name="logging.path"  source="logging.path"/>
-    <springProperty scope="context" name="logging.level" source="logging.level.com.glmapper.spring.boot"/>
+<!--    <springProperty scope="context" name="logging.path"  source="logging.path"/>-->
+<!--    <springProperty scope="context" name="logging.level" source="logging.level.com.glmapper.spring.boot"/>-->
 
 
-    <contectName>aaaaa66666666666</contectName>
+    <contextName >aaaaa66666666666</contextName >
     <property  name="CONCEL_log_format"  value="%yellow(%d{YYYY/MM/DD HH:mm:ss.SSS}) %highlight([%-5level]) %green(%logger{80}) - %msg%n" />
     <property name="logging.path" value="./logs"/>
     <property name="encoding" value="utf-8"/>
@@ -48,14 +48,14 @@
             additivity="false">
 
 <!--        把該範圍內的log往兩個地方紀錄。-->
-        <appender-ref ref="file_log" />
-        <appender-ref ref="STDOUT"/>
+<!--        <appender-ref ref="file_log" />-->
+<!--        <appender-ref ref="STDOUT"/>-->
     </logger>
 
   <root level="info">   <!--  設定印製的級別-->
 <!--        <appender-ref ref="GLMAPPER-LOGGERONE"/>-->
 
-<!--        <appender-ref ref="GLMAPPER-LOGGERONE"/>-->
-<!--        <appender-ref ref="STDOUT"/>-->
+      <appender-ref ref="file_log"/>
+      <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

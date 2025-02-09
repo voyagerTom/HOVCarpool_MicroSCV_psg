@@ -48,14 +48,14 @@
             additivity="false">
 
 <!--        把該範圍內的log往兩個地方紀錄。-->
-<!--        <appender-ref ref="file_log" />-->
-<!--        <appender-ref ref="STDOUT"/>-->
+        <appender-ref ref="file_log" />
+        <appender-ref ref="STDOUT"/>
     </logger>
 
   <root level="info">   <!--  設定印製的級別-->
 <!--        <appender-ref ref="GLMAPPER-LOGGERONE"/>-->
 
-      <appender-ref ref="file_log"/>
+<!--      <appender-ref ref="file_log"/>-->
       <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

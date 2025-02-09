@@ -4,7 +4,7 @@ this is side project about HOV( High-Occupancy Vehicle) solution
 
 
 
-## HOVCarpool服務，以微服務架構呈現
+## HOVCarpool服務(一般乘客、使用者)，以微服務架構呈現
 
 
 ### HOV_psg
